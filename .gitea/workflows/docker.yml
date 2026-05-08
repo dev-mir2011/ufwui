@@ -4,14 +4,6 @@ on:
   push:
 
 jobs:
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: debug
-        run: |
-          echo "${{ gitea.repository }}"
   docker:
     runs-on: ubuntu-latest
 
@@ -35,7 +27,7 @@ jobs:
         run: |
           docker build \
             -t 192.168.1.100:3002/${{ gitea.repository }}:latest \
-            -t ghcr.io/${{ secrets.GHCR_USER }}/${{ gitea.repository }}:latest \
+            -t ghcr.io/${{ gitea.repository }}:latest \
             -f docker/Dockerfile .
 
       - name: Push image to Gitea
