@@ -57,6 +57,9 @@ async function loadRules() {
       row.innerHTML = `
                 <td>${rule.id}</td>
                 <td>${rule.port}</td>
+                <td>${rule.ipv6 ? "(IPv6)" : "(IPv4)"}</td>
+                <td>${rule.action}</td>
+                <td>${rule.from}</td>
                 <td>
                     <button class="delete-btn" onclick="deleteRule(${rule.id})">
                         Delete
@@ -85,9 +88,9 @@ document.getElementById("ruleForm").addEventListener("submit", async (e) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      port,
-      protocol,
-      rule,
+      port: Number(port),
+      protocol: protocol,
+      rule: rule,
     }),
   });
 
