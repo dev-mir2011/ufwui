@@ -15,7 +15,7 @@
   --cap-add NET_RAW \
   -v /etc/ufw:/etc/ufw \
   --restart unless-stopped \
-  192.168.1.100:3002/dev-mir2011/ufwui:latest
+  ghcr.io/dev-mir2011/ufwui:latest
   ```
 
 - ### **Docker Compose :-**
@@ -23,7 +23,7 @@
   ```yaml
     services:
     ufwui:
-        image: 192.168.1.100:3002/dev-mir2011/ufwui:latest
+        image: ghcr.io/dev-mir2011/ufwui:latest
         container_name: ufwui
 
         network_mode: host
