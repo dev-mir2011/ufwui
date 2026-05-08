@@ -5,7 +5,7 @@
 ## `How to run :-`
 
 - ### **Docker Run :-**
-  
+
   ```bash
   docker run -d \
   --name ufwui \
@@ -14,28 +14,32 @@
   --cap-add NET_ADMIN \
   --cap-add NET_RAW \
   -v /etc/ufw:/etc/ufw \
+  -e APP_PORT=5000 \
   --restart unless-stopped \
   ghcr.io/dev-mir2011/ufwui:latest
   ```
 
 - ### **Docker Compose :-**
-  
+
   ```yaml
-    services:
-    ufwui:
-        image: ghcr.io/dev-mir2011/ufwui:latest
-        container_name: ufwui
+  services:
+  ufwui:
+    image: ghcr.io/dev-mir2011/ufwui:latest
+    container_name: ufwui
 
-        network_mode: host
+    network_mode: host
 
-        privileged: true
+    privileged: true
 
-        cap_add:
-        - NET_ADMIN
-        - NET_RAW
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
 
-        volumes:
-        - /etc/ufw:/etc/ufw
+    volumes:
+      - /etc/ufw:/etc/ufw
 
-        restart: unless-stopped
+    environment:
+      - APP_PORT=5000
+
+    restart: unless-stopped
   ```
