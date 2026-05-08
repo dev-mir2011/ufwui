@@ -36,4 +36,4 @@ jobs:
 
       - name: Push image to GitHub
         run: |
-          docker push ghcr.io/${{ secrets.GHCR_USER }}/${{ gitea.repository_name }}:latest
+          docker push ghcr.io/${{ gitea.repository_name }}:latest
