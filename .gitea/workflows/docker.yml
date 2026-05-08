@@ -4,6 +4,14 @@ on:
   push:
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: debug
+        run: |
+          echo "${{ gitea.repository }}"
   docker:
     runs-on: ubuntu-latest
 
