@@ -1,18 +1,10 @@
-import os
 import re
 import subprocess
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-SUDO_PASS = os.getenv("SUDO_PASSWORD")
 
 
 def helper_list_ufw_rules() -> list:
     cmd = subprocess.run(
-        ["sudo", "-S", "ufw", "status", "numbered"],
-        input=SUDO_PASS + "\n",
+        ["ufw", "status", "numbered"],
         capture_output=True,
         text=True,
     )
@@ -62,16 +54,14 @@ def helper_add_ufw_rule(port: int, protocol: str, rule: str):
 
     if protocol == "":
         cmd = subprocess.run(
-            ["sudo", "-S", "ufw", rule, f"{port}{protocol}"],
-            input=SUDO_PASS + "\n",
+            ["ufw", rule, f"{port}{protocol}"],
             capture_output=True,
             text=True,
         )
 
     else:
         cmd = subprocess.run(
-            ["sudo", "-S", "ufw", rule, f"{port}/{protocol}"],
-            input=SUDO_PASS + "\n",
+            ["ufw", rule, f"{port}/{protocol}"],
             capture_output=True,
             text=True,
         )
@@ -81,8 +71,7 @@ def helper_add_ufw_rule(port: int, protocol: str, rule: str):
 
 def helper_remove_ufw_rule(rule_id: int):
     cmd = subprocess.run(
-        ["sudo", "-S", "ufw", "--force", "delete", str(rule_id)],
-        input=f"{SUDO_PASS}\n",
+        ["ufw", "--force", "delete", str(rule_id)],
         capture_output=True,
         text=True,
     )
@@ -95,8 +84,7 @@ def helper_remove_ufw_rule(rule_id: int):
 
 def helper_enable_firewall():
     cmd = subprocess.run(
-        ["sudo", "-S", "ufw", "--force", "enable"],
-        input=f"{SUDO_PASS}\n",
+        ["ufw", "--force", "enable"],
         capture_output=True,
         text=True,
     )
@@ -109,8 +97,7 @@ def helper_enable_firewall():
 
 def helper_disable_firewall():
     cmd = subprocess.run(
-        ["sudo", "-S", "ufw", "disable"],
-        input=f"{SUDO_PASS}\n",
+        ["ufw", "disable"],
         capture_output=True,
         text=True,
     )
@@ -123,8 +110,7 @@ def helper_disable_firewall():
 
 def helper_get_status():
     cmd = subprocess.run(
-        ["sudo", "-S", "ufw", "status"],
-        input=f"{SUDO_PASS}\n",
+        ["ufw", "status"],
         capture_output=True,
         text=True,
     )
