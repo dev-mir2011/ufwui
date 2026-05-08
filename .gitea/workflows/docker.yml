@@ -1,6 +1,7 @@
 name: Docker Build
 
-on: [push]
+on:
+  push:
 
 jobs:
   docker:
@@ -10,23 +11,29 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Login to Gitea Registry
-        run: echo "${{ secrets.ACCESS_TOKEN }}" | docker login ${{ gitea.server_url }} -u ${{ gitea.actor }} --password-stdin
+        run: |
+          echo "${{ secrets.ACCESS_TOKEN }}" | docker login \
+          192.168.1.100:3002 \
+          -u "${{ gitea.actor }}" \
+          --password-stdin
 
       - name: Login to GHCR
         run: |
           echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io \
-            -u "${{ secrets.GHCR_USER }}" --password-stdin
+            -u "${{ secrets.GHCR_USER }}" \
+            --password-stdin
 
       - name: Build image
         run: |
           docker build \
             -t 192.168.1.100:3002/${{ gitea.repository }}:latest \
+            -t ghcr.io/${{ secrets.GHCR_USER }}/${{ gitea.repository_name }}:latest \
             -f docker/Dockerfile .
 
       - name: Push image to Gitea
         run: |
           docker push 192.168.1.100:3002/${{ gitea.repository }}:latest
 
-      - name: Push image to Github
+      - name: Push image to GitHub
         run: |
-          docker push 192.168.1.100:3002/${{ gitea.repository }}:latest
+          docker push ghcr.io/${{ secrets.GHCR_USER }}/${{ gitea.repository_name }}:latest
