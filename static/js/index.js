@@ -56,7 +56,7 @@ async function loadRules() {
 
       row.innerHTML = `
                 <td>${rule.id}</td>
-                <td>${rule.rule}</td>
+                <td>${rule.port}</td>
                 <td>
                     <button class="delete-btn" onclick="deleteRule(${rule.id})">
                         Delete
