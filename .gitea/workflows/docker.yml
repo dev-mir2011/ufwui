@@ -11,7 +11,12 @@ jobs:
 
       - name: Login to Gitea Registry
         run: echo "${{ secrets.ACCESS_TOKEN }}" | docker login ${{ gitea.server_url }} -u ${{ gitea.actor }} --password-stdin
-        
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io \
+            -u "${{ secrets.GHCR_USER }}" --password-stdin
+
       - name: Build image
         run: |
           docker build \
@@ -22,3 +27,6 @@ jobs:
         run: |
           docker push 192.168.1.100:3002/${{ gitea.repository }}:latest
 
+      - name: Push image to Github
+        run: |
+          docker push 192.168.1.100:3002/${{ gitea.repository }}:latest
