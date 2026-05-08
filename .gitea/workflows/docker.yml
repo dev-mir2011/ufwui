@@ -27,7 +27,7 @@ jobs:
         run: |
           docker build \
             -t 192.168.1.100:3002/${{ gitea.repository }}:latest \
-            -t ghcr.io/${{ secrets.GHCR_USER }}/${{ gitea.repository_name }}:latest \
+            -t ghcr.io/${{ secrets.GHCR_USER }}/${{ gitea.repository }}:latest \
             -f docker/Dockerfile .
 
       - name: Push image to Gitea
